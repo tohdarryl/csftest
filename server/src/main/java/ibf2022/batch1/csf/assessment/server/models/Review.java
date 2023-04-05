@@ -3,6 +3,7 @@ package ibf2022.batch1.csf.assessment.server.models;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
+import jakarta.json.JsonValue.ValueType;
 
 // DO NOT MODIFY THIS CLASS
 public class Review {
@@ -64,10 +65,15 @@ public static Review toReview(JsonObject obj){
     r.setSummary(obj.getString("summary_short"));
 
 	JsonObject link = obj.getJsonObject("link");
-	JsonObject multimedia = obj.getJsonObject("multimedia");
-
 	r.setReviewURL(link.getString("url"));
-	r.setImage(multimedia.getString("src"));
+
+	
+
+	if(obj.get("multimedia").getValueType() != ValueType.NULL){
+		r.setImage(obj.getJsonObject("multimedia").getString("src"));
+	} else{
+		r.setImage("/placeholder.jpg");
+	}
 
     return r;
 }
@@ -77,7 +83,7 @@ public JsonObject toJSON() {
             .add("title", getTitle())
 			.add("rating", getRating())
 			.add("byline", getByline())
-			.add("headline", getByline())
+			.add("headline", getHeadline())
 			.add("summary", getSummary())
 			.add("reviewURL", getReviewURL())
 			.add("image", getImage())

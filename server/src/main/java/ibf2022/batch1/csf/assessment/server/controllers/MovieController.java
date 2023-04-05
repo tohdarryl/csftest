@@ -48,7 +48,7 @@ public class MovieController {
 		 JsonArray result = null;
 		 // Get list of reviews using API
 		 List<Review> listOfR = this.mService.searchReviews(query);
-		
+		 System.out.println(listOfR);
 		
  
 		 // Create JsonArray for ResponseBody

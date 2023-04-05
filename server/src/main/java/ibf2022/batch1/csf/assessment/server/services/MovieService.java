@@ -19,7 +19,8 @@ import ibf2022.batch1.csf.assessment.server.repositories.MovieRepository;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
-import jakarta.json.JsonReader;;
+import jakarta.json.JsonReader;
+import jakarta.json.JsonValue.ValueType;;
 
 @Service
 public class MovieService {
@@ -58,16 +59,20 @@ public class MovieService {
         String payload = resp.getBody();
         JsonReader reader = Json.createReader(new StringReader(payload));
         JsonObject movieResp = reader.readObject();
-        JsonArray jsonArr = movieResp.getJsonArray("results");
-
-        if(jsonArr == null){
+		JsonArray jsonArr = movieResp.getJsonArray("results");
+        
+		// For any values = null
+        if(jsonArr.getValueType() == ValueType.NULL){
 			return Collections.emptyList();
-		}
-
-        return jsonArr.stream()
+		}else{
+			
+			return jsonArr.stream()
                 .map(v -> v.asJsonObject())
                 .map(Review::toReview)
                 .toList();
+		}
+
+        
         
 		
     }

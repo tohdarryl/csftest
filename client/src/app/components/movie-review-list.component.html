@@ -1,0 +1,70 @@
+<h1>Search Result</h1> 
+<button type="button" (click)="back()">Back</button>
+
+<div *ngIf="reviews; else noData">
+
+    <div *ngFor="let r of reviews">
+
+            <table>
+            <tr>
+            <td>
+            <table>
+                <tr>
+                    <td> 
+                        <img src="{{r.image}}" onerror="this.src='placeholder.jpg';" style="width:100px;height:100px;">
+                    </td>
+                </tr>
+            </table>
+            </td>
+
+            <td>
+
+            <table>
+            <tr>
+                <td>
+                    <a href="{{r.reviewURL}}" target="_blank">{{r.title}} {{r.rating}} </a>
+                </td>
+            </tr>
+           
+            <tr>
+                <td>
+                    <code>{{r.headline}}</code>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <code>{{r.summary}}</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Comments:</td>
+                <td>
+                    <code>{{r.commentCount}}</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <button type="button" (click)="addComment(r.title)"> Comment</button>
+                </td>
+            </tr>
+            
+
+            </table>
+            </td>
+        </tr>
+        </table>
+        
+        
+    </div>
+
+</div>
+
+
+<ng-template #noData>
+    <h2>Your search produces no result</h2>
+</ng-template>
